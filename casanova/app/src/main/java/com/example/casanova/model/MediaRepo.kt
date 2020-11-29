@@ -17,8 +17,7 @@ class MediaRepo : Contract.Repo {
         }
     }
 
-    override fun getData() {
-        val videoList = mutableListOf<Video>()
+    override fun getData(videoList: MutableList<Video>) {
         val projection = arrayOf(
             MediaStore.Video.Media._ID,
             MediaStore.Video.Media.DISPLAY_NAME,
