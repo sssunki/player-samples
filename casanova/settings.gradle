@@ -1,2 +1,3 @@
+include ':libcasanova'
 include ':app'
 rootProject.name = "casanova"
