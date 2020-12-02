@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.casanova.model.MediaRepo
 import com.example.casanova.model.Video
 import com.example.casanova.player.`interface`.CasanovaBuilder
+import com.example.casanova.player.ni.JNIT
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         val dataSet = arrayListOf(
             "sun", "kai", "yi", "test"
         )
+
+        request_video.text = JNIT().getStringFromJNI()
 
         adapter = SAdapter(dataSet)
         recyclerView.apply {

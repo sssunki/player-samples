@@ -23,6 +23,13 @@ android {
         }
     }
 
+    externalNativeBuild {
+        cmake {
+            version '3.19.1'
+            path 'src/main/app/CMakeLists.txt'
+        }
+    }
+
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
