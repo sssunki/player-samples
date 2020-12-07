@@ -1,4 +1,20 @@
 cmake_minimum_required(VERSION 3.10.2)
+
+include_directories(
+        include
+        glm
+        ${CMAKE_SOURCE_DIR}/ffmpeg/player
+)
+
+file(GLOB src-files
+        ${CMAKE_SOURCE_DIR}/ffmpeg/player/*.cpp)
+
+add_library(
+        player-internal
+        SHARED
+        ${src-files}
+)
+
 add_library(
         avcodec
         SHARED
@@ -73,6 +89,7 @@ set_target_properties(my-sdk PROPERTIES LINKER_LANGUAGE CXX)
 
 target_link_libraries(
         my-sdk
+        player-internal
         avcodec
         avfilter
         avformat
