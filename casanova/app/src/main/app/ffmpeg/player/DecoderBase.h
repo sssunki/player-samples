@@ -34,6 +34,7 @@ private:
     void decodingLoop();
     void unUnitDecoder();
     void onDecoderDone();
+    bool errorHappened(int resultCode);
 
     thread *decodingThread = nullptr;
     AVFormatContext *avFormatContext = nullptr;
@@ -41,7 +42,7 @@ private:
     AVCodec *codec = nullptr;
     AVPacket *packet = nullptr;
     AVFrame *frame = nullptr;
-    AVMediaType mediaType = AVMEDIA_TYPE_UNKNOWN;
+    AVMediaType mediaType = AVMEDIA_TYPE_VIDEO;
     int streamIndex = -1;
 
     char  m_Url[MAX_PATH] = {0};
