@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,7 @@ import com.example.casanova.player.ni.JNIT
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +56,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         play_button.setOnClickListener {
-            startPlay()
+            val i = 2
+            val mVideoPath = videoList[i].uri.toString() + "/" + videoList[i].name
+            JNIT().initPlayer(mVideoPath)
         }
 
     }

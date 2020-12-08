@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10.2)
 
 include_directories(
-        include
-        glm
+        ${CMAKE_SOURCE_DIR}/ffmpeg/include
         ${CMAKE_SOURCE_DIR}/ffmpeg/player
 )
 
 file(GLOB src-files
+        ${CMAKE_SOURCE_DIR}/jnicall.cpp
         ${CMAKE_SOURCE_DIR}/ffmpeg/player/*.cpp)
 
 add_library(
@@ -14,6 +14,7 @@ add_library(
         SHARED
         ${src-files}
 )
+set_target_properties(player-internal PROPERTIES LINKER_LANGUAGE CXX)
 
 add_library(
         avcodec
@@ -81,14 +82,8 @@ set_target_properties(
         ${CMAKE_SOURCE_DIR}/ffmpeg/armeabi-v7a/libswscale.so
 )
 
-add_library(
-    my-sdk
-    SHARED
-    ${CMAKE_SOURCE_DIR}/jnicall.cpp)
-set_target_properties(my-sdk PROPERTIES LINKER_LANGUAGE CXX)
 
 target_link_libraries(
-        my-sdk
         player-internal
         avcodec
         avfilter

@@ -9,5 +9,5 @@
 
 class Decoder {
 public:
-    virtual void Start() = 0;
+    virtual void start(const char* url) = 0;
 };
