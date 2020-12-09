@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.casanova.model.MediaRepo
 import com.example.casanova.model.Video
 import com.example.casanova.player.`interface`.CasanovaBuilder
-import com.example.casanova.player.ni.JNIT
+import com.example.casanova.player.ni.FFmpegPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             "sun", "kai", "yi", "test"
         )
 
-        request_video.text = JNIT().getStringFromJNI()
+        request_video.text = FFmpegPlayer().getStringFromJNI()
 
         adapter = SAdapter(dataSet)
         recyclerView.apply {
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             val path = cursor?.getString(columnIndex!!)
             val mVideoPath = videoList[i].uri.toString() + "/" + videoList[i].name
             Log.e("sunkaiyi","uri: " + mVideoPath + " path: " + path)
-            JNIT().initPlayer(assetsVideoPath)
+            FFmpegPlayer().initPlayer(assetsVideoPath)
         }
 
     }

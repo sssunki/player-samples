@@ -1,6 +1,6 @@
 package com.example.casanova.player.ni
 
-class JNIT {
+class FFmpegPlayer {
 
     public external fun getStringFromJNI(): String
     public external fun initPlayer(url: String)
