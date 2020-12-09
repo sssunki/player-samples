@@ -7,6 +7,7 @@ include_directories(
 
 file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/jnicall.cpp
+        ${CMAKE_SOURCE_DIR}/ffmpeg/render/*.cpp
         ${CMAKE_SOURCE_DIR}/ffmpeg/player/*.cpp)
 
 add_library(

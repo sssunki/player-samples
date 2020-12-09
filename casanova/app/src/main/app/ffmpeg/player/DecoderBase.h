@@ -34,6 +34,7 @@ private:
     void decodingLoop();
     void unUnitDecoder();
     void onDecoderDone();
+    void decodeOnePacket();
     bool errorHappened(int resultCode);
 
     thread *decodingThread = nullptr;

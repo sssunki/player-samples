@@ -14,6 +14,15 @@ extern "C" {
 #include <libavutil/frame.h>
 }
 
+void DecoderBase::start(const char* url) {
+    strcpy(m_Url, url);
+    startDecodingThread();
+}
+
+void DecoderBase::startDecodingThread() {
+    decodingThread = new thread(doDecoding, this);
+}
+
 void DecoderBase::doDecoding(DecoderBase *decoder) {
     __android_log_print(ANDROID_LOG_ERROR, "sunkaiyi", "start decoding");
     decoder->initFFDecoder();
@@ -21,18 +30,6 @@ void DecoderBase::doDecoding(DecoderBase *decoder) {
     decoder->decodingLoop();
     decoder->unUnitDecoder();
     decoder->onDecoderDone();
-}
-
-void DecoderBase::onDecoderReady() {
-}
-
-void DecoderBase::decodingLoop() {
-}
-
-void DecoderBase::unUnitDecoder() {
-}
-
-void DecoderBase::onDecoderDone() {
 }
 
 int DecoderBase::initFFDecoder() {
@@ -90,14 +87,20 @@ int DecoderBase::initFFDecoder() {
     return result;
 }
 
-
-void DecoderBase::startDecodingThread() {
-    decodingThread = new thread(doDecoding, this);
+void DecoderBase::onDecoderReady() {
+   // todo : extension
 }
 
-void DecoderBase::start(const char* url) {
-    strcpy(m_Url, url);
-    startDecodingThread();
+void DecoderBase::decodingLoop() {
+
+}
+
+void DecoderBase::unUnitDecoder() {
+    // todo : extension
+}
+
+void DecoderBase::onDecoderDone() {
+    // todo : extension
 }
 
 bool DecoderBase::errorHappened(int resultCode) {
@@ -109,6 +112,10 @@ bool DecoderBase::errorHappened(int resultCode) {
         __android_log_print(ANDROID_LOG_ERROR, "reason", "%s", error);
         return true;
     }
+}
+
+void DecoderBase::decodeOnePacket() {
+
 }
 
 
