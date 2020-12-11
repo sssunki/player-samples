@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             val path = cursor?.getString(columnIndex!!)
             val mVideoPath = videoList[i].uri.toString() + "/" + videoList[i].name
             Log.e("sunkaiyi","uri: " + mVideoPath + " path: " + path)
-            FFmpegPlayer().initPlayer(assetsVideoPath)
+            FFmpegPlayer().initDecoder(assetsVideoPath, surface_view.holder.surface)
         }
 
     }

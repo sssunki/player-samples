@@ -7,11 +7,15 @@
 #include <cstdio>
 #include <cstring>
 #include "android/log.h"
+#include "android/native_window.h"
+#include "android/native_window_jni.h"
 
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
 #include <libavutil/frame.h>
+#include <libswscale/swscale.h>
+#include <libavutil/imgutils.h>
 }
 
 void DecoderBase::start(const char* url) {
@@ -88,10 +92,34 @@ int DecoderBase::initFFDecoder() {
 }
 
 void DecoderBase::onDecoderReady() {
-   // todo : extension
+    videoWidth = avCodecContext->width;
+    videoHeight = avCodecContext->height;
+
+    RGBAFrame = av_frame_alloc();
+
+    int bufferSize = av_image_get_buffer_size(AV_PIX_FMT_RGBA, videoWidth, videoHeight, 1);
+
+    frameBuffer = (uint8_t *) av_malloc(bufferSize * sizeof(uint8_t));
+
+    av_image_fill_arrays(RGBAFrame->data, RGBAFrame->linesize,
+                         frameBuffer, AV_PIX_FMT_RGBA, videoWidth, videoHeight, 1);
+
+    swsContext = sws_getContext(videoWidth, videoHeight, avCodecContext->pix_fmt,
+                                  videoWidth, videoHeight, AV_PIX_FMT_RGBA,
+                                  SWS_FAST_BILINEAR, NULL, NULL, NULL);
 }
 
 void DecoderBase::decodingLoop() {
+    while (av_read_frame(avFormatContext, packet) == 0) {
+        if (packet->stream_index == streamIndex) {
+            if (avcodec_send_packet(avCodecContext, packet) == AVERROR_EOF) {
+                return;
+            }
+            if (avcodec_receive_frame(avCodecContext, frame) == 0) {
+                onFrameAvailable();
+            }
+        }
+    }
 
 }
 
@@ -115,6 +143,29 @@ bool DecoderBase::errorHappened(int resultCode) {
 }
 
 void DecoderBase::decodeOnePacket() {
+
+}
+
+void DecoderBase::onFrameAvailable() {
+    sws_scale(swsContext, frame->data, frame->linesize, 0,
+              videoHeight, RGBAFrame->data, RGBAFrame->linesize);
+
+    ANativeWindow_setBuffersGeometry(nativeWindow, videoWidth, videoHeight, WINDOW_FORMAT_RGBA_8888);
+
+    ANativeWindow_Buffer nativeWindowBuffer;
+
+    ANativeWindow_lock(nativeWindow, &nativeWindowBuffer, nullptr);
+
+    uint8_t *dstBuffer = static_cast<uint8_t *>(nativeWindowBuffer.bits);
+
+    int srcLineSize = RGBAFrame->linesize[0];
+    int dstLineSize = nativeWindowBuffer.stride * 4;
+
+    for (int i = 0;  i < videoHeight; ++ i) {
+        memcpy(dstBuffer + i * dstLineSize, frameBuffer + i * srcLineSize, srcLineSize);
+    }
+
+    ANativeWindow_unlockAndPost(nativeWindow);
 
 }
 

@@ -6,3 +6,9 @@
 #define CASANOVA_NATIVERENDER_H
 
 #endif //CASANOVA_NATIVERENDER_H
+
+class NativeRender {
+public:
+    void init();
+    void RenderVideoFrame() ;
+};

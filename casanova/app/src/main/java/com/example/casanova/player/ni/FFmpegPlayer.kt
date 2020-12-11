@@ -1,9 +1,12 @@
 package com.example.casanova.player.ni
 
+import android.view.Surface
+
 class FFmpegPlayer {
 
     public external fun getStringFromJNI(): String
     public external fun initPlayer(url: String)
+    public external fun initDecoder(url: String, surface: Surface)
 
     companion object {
         init {
