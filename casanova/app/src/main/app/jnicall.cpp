@@ -9,7 +9,7 @@ Java_com_example_casanova_player_ni_FFmpegPlayer_getStringFromJNI(JNIEnv *env, j
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_casanova_player_ni_FFmpegPlayer_initPlayer(JNIEnv *env, jobject thiz, jstring jurl) {
+Java_com_example_casanova_player_ni_FFmpegPlayer_init(JNIEnv *env, jobject thiz, jstring jurl) {
 
 }
 

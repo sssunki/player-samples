@@ -4,10 +4,8 @@ import com.example.casanova.player.internal.CasanovaImpl
 
 class CasanovaBuilder {
 
-    companion object {
-        public fun build(): Casanova {
-            return CasanovaImpl()
-        }
+    public fun build(): Casanova {
+        return CasanovaImpl()
     }
 
 }

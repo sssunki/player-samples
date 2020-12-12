@@ -24,9 +24,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var layoutManager: LinearLayoutManager
     lateinit var adapter: SAdapter
     private val assetsVideoPath = Environment.getExternalStorageDirectory().absolutePath + "/sunkaiyi/one_piece.mp4"
-    private val casanova by lazy {
-        CasanovaBuilder.build()
-    }
     private var videoList = mutableListOf<Video>()
     private lateinit var player: SimpleExoPlayer
 
@@ -57,14 +54,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         play_button.setOnClickListener {
-            val i = 2
-            val proj = arrayOf(MediaStore.Video.Media.DATA)
-            val cursor = applicationContext.contentResolver.query(videoList[i].uri, proj, null, null, null)
-            val columnIndex = cursor?.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
-            cursor?.moveToFirst()
-            val path = cursor?.getString(columnIndex!!)
-            val mVideoPath = videoList[i].uri.toString() + "/" + videoList[i].name
-            Log.e("sunkaiyi","uri: " + mVideoPath + " path: " + path)
             FFmpegPlayer().initDecoder(assetsVideoPath, surface_view.holder.surface)
         }
 

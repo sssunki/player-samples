@@ -37,7 +37,7 @@ class CasanovaImpl : Casanova {
     }
 
     override fun init() {
-
+        playerInternal.init("url");
     }
 
     override fun setVideoSurface(surface: SurfaceView) {
